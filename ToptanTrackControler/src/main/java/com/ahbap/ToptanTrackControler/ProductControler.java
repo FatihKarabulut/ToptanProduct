@@ -22,6 +22,8 @@ public class ProductControler {
         this.productServices = productServices;
     }
 
+
+
     @GetMapping("/findByName")
     public ResponseEntity<List<ProductEntityDataService>> findByName(@RequestParam String  name) {
 
@@ -51,12 +53,14 @@ public class ProductControler {
         return product.equals(Optional.empty()) ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(product.get());
     }
+
     @DeleteMapping("/delete-by-name")
     public boolean deleteByName(@RequestParam String name)  {
 
         return productServices.deleteByName(name);
 
     }
+
 
     @DeleteMapping("/delete-all")
     public boolean deleteByAll()   {
