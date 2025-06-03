@@ -23,6 +23,7 @@ public class DataHalper implements IProduct<ProductEntity> {
     public List<ProductEntity> findByName(String  name)
     {
         try {
+
             return dao.findByName(name.toUpperCase());
 
         }
@@ -51,6 +52,8 @@ public class DataHalper implements IProduct<ProductEntity> {
 
         try {
 
+            if (name.isBlank())
+                return false;
            dao.deleteByName(name.toUpperCase());
            return true;
         }
@@ -81,8 +84,10 @@ public class DataHalper implements IProduct<ProductEntity> {
 
         try {
 
-            if (stock < 0)
+
+            if (stock < 0 || name.isBlank())
                 return false;
+
 
             dao.updateADDStock(stock,name.toUpperCase());
             return true;
@@ -95,11 +100,12 @@ public class DataHalper implements IProduct<ProductEntity> {
     public boolean updateADDStock(int stock, String name) {
 
         try {
+            var list = dao.findByName(name.toUpperCase());
 
-            if (stock < 0)
+            if (stock < 0 || list.isEmpty())
                 return false;
 
-            var digit = dao.findByName(name.toUpperCase()).get(0).stock;
+            var digit =  list.get(0).stock;
 
             return updateStock(digit + stock,name);
 
@@ -113,11 +119,13 @@ public class DataHalper implements IProduct<ProductEntity> {
 
         try {
 
-            if (stock < 0)
+            var list = dao.findByName(name.toUpperCase());
+            if (stock < 0 || list.isEmpty())
                 return false;
 
-            var digit = dao.findByName(name.toUpperCase()).get(0).stock;
-           return updateStock(Math.max(digit - stock, 0),name);
+            var digit = list.get(0).stock;
+
+           return updateStock(digit - stock,name);
 
         }
         catch (Throwable e)
@@ -135,6 +143,8 @@ public class DataHalper implements IProduct<ProductEntity> {
                 return false;
              if (byPrice.compareTo(sellPrice) < 0)
                  return false;
+            if (name.isBlank())
+                return false;
             return dao.updateSellPriceAndByPrice(sellPrice,
                     byPrice,name.toUpperCase()) > 0 ;
         }
@@ -156,6 +166,8 @@ public class DataHalper implements IProduct<ProductEntity> {
                 return false;
             if (!list.isEmpty())
                 return false;
+            if (name.isBlank())
+                return false;
             return dao.updateSellPrice(sellPrice,
                    name.toUpperCase()) > 0 ;
         }
@@ -174,6 +186,8 @@ public class DataHalper implements IProduct<ProductEntity> {
             if (byPrice.compareTo(BigDecimal.ZERO) < 0)
                 return false;
             if (!list.isEmpty())
+                return false;
+            if (name.isBlank())
                 return false;
             return dao.updateByPrice(byPrice,
                     name.toUpperCase()) > 0 ;
@@ -236,10 +250,18 @@ public class DataHalper implements IProduct<ProductEntity> {
                 dao.save(product);
 
             }
+           else if (product.stock < 0 || product.sellPrice.compareTo(BigDecimal.ZERO) <= 0
+                    || product.byPrice.compareTo(BigDecimal.ZERO) <= 0 ||
+                    product.byPrice.compareTo(product.sellPrice) <= 0)
+                return false;
+           else if (product.name.isBlank() || product.addedBy.isBlank() )
+               return false;
+
             else {
                 dao.save(product);
 
             }
+
             return true;
         }
         catch (Throwable e)

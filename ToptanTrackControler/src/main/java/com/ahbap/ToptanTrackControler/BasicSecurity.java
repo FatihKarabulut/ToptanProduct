@@ -28,10 +28,11 @@ public class BasicSecurity {
                 .authorizeHttpRequests(a ->
                                         a.requestMatchers("product/delete-by-name").hasRole("ADMIN")
                                        .requestMatchers("product/delete-all").hasRole("ADMIN")
-                                                .requestMatchers("product/findAll").hasRole("ADMIN")
+
 
                                 .anyRequest().permitAll()
-                ).formLogin(withDefaults()
+                ).httpBasic(withDefaults())
+                .formLogin(withDefaults()
                 ).logout(withDefaults())
                 .build();
     }

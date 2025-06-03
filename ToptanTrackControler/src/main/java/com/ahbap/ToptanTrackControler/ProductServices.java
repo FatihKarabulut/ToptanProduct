@@ -1,7 +1,6 @@
 package com.ahbap.ToptanTrackControler;
 
 import com.ahbap.DataServiceException;
-import com.ahbap.IProduct;
 import com.ahbap.RepositoryException;
 import com.ahbap.ToptanTrackDataService.DataService;
 import com.ahbap.ToptanTrackDataService.ProductEntityDataService;
@@ -9,8 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,7 +28,10 @@ public class ProductServices  {
     public Optional<List<ProductEntityDataService>> findByName(String  name) {
         try {
 
-            return Optional.of(dataService.findByName(name));
+            var list = new ArrayList<>(dataService.findByName(name));
+            Collections.reverse(list);
+
+            return Optional.of(list);
 
         }
         catch (DataServiceException e)
@@ -43,7 +48,9 @@ public class ProductServices  {
 
         try {
 
-            return Optional.of(dataService.findAll());
+            var list = new ArrayList<>(dataService.findAll());
+            Collections.reverse(list);
+            return Optional.of(list);
 
         }
         catch (DataServiceException e)
@@ -57,7 +64,9 @@ public class ProductServices  {
     public Optional<List<ProductEntityDataService>> findByByPrice(BigDecimal byPrice) {
 
         try {
-            return Optional.of(dataService.findByByPrice(byPrice));
+            var list = new ArrayList<>(dataService.findByByPrice(byPrice));
+            Collections.reverse(list);
+            return Optional.of(list);
         }
         catch (Throwable e)
         {
@@ -68,7 +77,9 @@ public class ProductServices  {
     public Optional<List<ProductEntityDataService>> findBySellPrice(BigDecimal sellPrice) {
 
         try {
-            return Optional.of(dataService.findBySellPrice(sellPrice));
+            var list = new ArrayList<>(dataService.findBySellPrice(sellPrice));
+            Collections.reverse(list);
+            return Optional.of(list);
         }
         catch (Throwable e)
         {
@@ -174,8 +185,9 @@ public class ProductServices  {
     public Optional<List<ProductEntityDataService>> getProductsWithStockLessThan(int stock) {
 
         try {
-
-            return Optional.of(dataService.getProductsWithStockLessThan(stock));
+            var list = new ArrayList<>(dataService.getProductsWithStockLessThan(stock));
+            Collections.reverse(list);
+            return Optional.of(list);
         }
         catch (Throwable e)
         {

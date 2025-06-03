@@ -40,7 +40,7 @@ class ToptanTrackApplicationTests {
 			ProductEntity product = new ProductEntity();
 			product.name = "Laptop";
 			product.addedBy = "Fatih";
-			product.stock = 25;
+			product.stock = 10;
 			product.byPrice =  BigDecimal.valueOf(1500.00);
 			product.sellPrice = BigDecimal.valueOf(1100.00);
 			product.datetime = LocalDateTime.now();
@@ -122,14 +122,18 @@ class ToptanTrackApplicationTests {
 	}
 	@Test
 	public void updateToReduceStock()  {
-		assertTrue(dataHalper.updateToReduceStock(3, "Laptop"));
+
+		dataHalper.updateToReduceStock(1,"Laptop");
+		assertEquals(9,dataHalper.findByName("laptop").get(0).stock);
 	}
 
 
 	@Test
 	void updateADDStock()  {
 
-		assertTrue(dataHalper.updateADDStock(7, "Laptop"));
+		dataHalper.updateADDStock(10,"Laptop");
+		assertEquals(20,dataHalper.findByName("laptop").get(0).stock);
+
 	}
 
 }
