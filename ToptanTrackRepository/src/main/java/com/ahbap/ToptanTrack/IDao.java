@@ -54,6 +54,42 @@ public interface IDao extends CrudRepository<ProductEntity,Long> {
      void deleteAllBy();
 
 
+     @Query(nativeQuery = true,value = "SELECT COUNT(*) FROM product p  WHERE p.stock > 0")
+     int totalStockQuantity();
+
+     @Query(nativeQuery = true,value = "SELECT MAX(p.sell_price)  FROM product p WHERE p.stock > 0")
+     BigDecimal MaxSellPrice();
+
+    @Query(nativeQuery = true,value = "SELECT MIN(p.sell_price) FROM product p WHERE p.stock > 0")
+     BigDecimal MinSellPrice();
+
+    @Query(nativeQuery = true,value = "SELECT MAX(p.by_price) FROM product p WHERE p.stock > 0")
+    BigDecimal MaxByPrice();
+
+    @Query(nativeQuery = true,value = "SELECT MIN(p.by_price) FROM product p WHERE p.stock > 0")
+    BigDecimal MinByPrice();
+    @Query(nativeQuery = true,value = "SELECT SUM(p.stock * p.sell_price), p.name,p.stock " +
+                                    "FROM product p WHERE p.stock > 0 group by p.name,p.stock")
+    List<TotalPriceDto> totalSellingPrice();
+
+    @Query(nativeQuery = true,value = "SELECT SUM(p.stock * p.by_price), p.name, p.stock FROM " +
+                                        "product p WHERE p.stock > 0 group by p.name,p.stock")
+    List<TotalPriceDto>  totalByPrice();
+
+    @Query(nativeQuery = true,value = """
+            SELECT SUM(p.stock * (p.sell_price - p.by_price)), 
+                   p.by_price ,p.sell_price, p.name FROM product p
+                 WHERE p.stock > 0 group by p.by_price ,p.sell_price, p.name
+""")
+    List<TotalProfitDto> totalProfit();
+
+    @Query(nativeQuery = true,value = "SELECT * FROM product p WHERE  p.sell_price = :sellPrice")
+    ProductEntity getBySellPrice(BigDecimal sellPrice);
+
+    @Query(nativeQuery = true,value = "SELECT * FROM product p WHERE  p.by_price = :byPrice")
+    ProductEntity getByPrice(BigDecimal byPrice);
+
+
 
 
 

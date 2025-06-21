@@ -30,8 +30,8 @@ class ToptanTrackApplicationTests {
 			product.name = "Laptop";
 			product.addedBy = "Fatih";
 			product.stock = 10;
-			product.byPrice =  BigDecimal.valueOf(1200.00);
-			product.sellPrice = BigDecimal.valueOf(1100.00);
+			product.byPrice =  BigDecimal.valueOf(1500.00);
+			product.sellPrice = BigDecimal.valueOf(1800.00);
 			product.datetime = LocalDateTime.now();
 
 			dataHalper.save(product);
@@ -42,7 +42,7 @@ class ToptanTrackApplicationTests {
 			product.addedBy = "Fatih";
 			product.stock = 10;
 			product.byPrice =  BigDecimal.valueOf(1500.00);
-			product.sellPrice = BigDecimal.valueOf(1100.00);
+			product.sellPrice = BigDecimal.valueOf(1800.00);
 			product.datetime = LocalDateTime.now();
 			dataHalper.save(product);
 		}
@@ -63,13 +63,13 @@ class ToptanTrackApplicationTests {
 	public void findByByPrice() {
 
 
-		assertEquals("laptop".toUpperCase(),dataHalper.findByByPrice(BigDecimal.valueOf(1800)).get(0).name);
+		assertEquals("laptop".toUpperCase(),dataHalper.findByByPrice(BigDecimal.valueOf(1500)).get(0).name);
 	}
 
 	@Test
 	public void findSellPrice() {
 
-		assertEquals("laptop".toUpperCase(),dataHalper.findBySellPrice(BigDecimal.valueOf(1200)).get(0).name);
+		assertEquals("laptop".toUpperCase(),dataHalper.findBySellPrice(BigDecimal.valueOf(1800)).get(0).name);
 	}
 
 
@@ -98,27 +98,27 @@ class ToptanTrackApplicationTests {
 	@Test
 	public void UpdatePriceTrue(){
 
-		assertTrue(dataHalper.updateByPrice(BigDecimal.valueOf(12500),"Laptop".toUpperCase()));
+		assertTrue(dataHalper.updateByPrice(BigDecimal.valueOf(850),"Laptop".toUpperCase()));
 	}
 	@Test
 	public void UpdatePriceFalse(){
 
-		assertFalse(dataHalper.updateByPrice(BigDecimal.valueOf(1100.00),"Laptop".toUpperCase()));
+		assertFalse(dataHalper.updateByPrice(BigDecimal.valueOf(1900.00),"Laptop".toUpperCase()));
 	}
 	@Test
 	public void UpdateSellPriceTrue(){
 
-		assertTrue(dataHalper.updateSellPrice(BigDecimal.valueOf(1150),"laptop".toUpperCase()));
+		assertTrue(dataHalper.updateSellPrice(BigDecimal.valueOf(1850),"laptop".toUpperCase()));
 	}
 	@Test
 	public void UpdateSellPriceFalse(){
 
-		assertFalse(dataHalper.updateSellPrice(BigDecimal.valueOf(1950),"laptop".toUpperCase()));
+		assertFalse(dataHalper.updateSellPrice(BigDecimal.valueOf(1250),"laptop".toUpperCase()));
 	}
 	@Test
 	public void updateSellPriceAndByPrice(){
 
-		assertTrue(dataHalper.updateSellPriceAndByPrice(BigDecimal.valueOf(12250),BigDecimal.valueOf(12750),"laptop".toUpperCase()));
+		assertTrue(dataHalper.updateSellPriceAndByPrice(BigDecimal.valueOf(12870),BigDecimal.valueOf(12550),"laptop".toUpperCase()));
 	}
 	@Test
 	public void updateToReduceStock()  {
@@ -134,6 +134,92 @@ class ToptanTrackApplicationTests {
 		dataHalper.updateADDStock(10,"Laptop");
 		assertEquals(20,dataHalper.findByName("laptop").get(0).stock);
 
+	}
+
+	@Test
+	void totalStockQuantity()
+	{
+		assertEquals(1,dataHalper.totalStockQuantity());
+	}
+	@Test
+	void MaxSellPrice()
+	{
+		var pe = new ProductEntity();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1200.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+		dataHalper.save(pe);
+		assertEquals("Laptop".toUpperCase(),dataHalper.MaxSellPrice().name);
+	}
+
+	@Test
+	void MinSellPrice()
+	{
+		var pe = new ProductEntity();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1200.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+
+		dataHalper.save(pe);
+		assertEquals("sarj".toUpperCase(),dataHalper.MinSellPrice().name);
+	}
+	@Test
+	void MaxByPrice()
+	{
+		var pe = new ProductEntity();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1000.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+		dataHalper.save(pe);
+		assertEquals("Laptop".toUpperCase(),dataHalper.MaxByPrice().name);
+	}
+
+	@Test
+	void MinByPrice()
+	{
+		var pe = new ProductEntity();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1000.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+
+		dataHalper.save(pe);
+		assertEquals("sarj".toUpperCase(),dataHalper.MinByPrice().name);
+	}
+
+	@Test
+	void totalSellingPrice()
+	{
+		/*
+			Burada save 1 defa yapılmıştır. Akışta
+			bir proplem olup olmadığı testi yapılmıştır
+		 */
+		assertEquals(10,dataHalper.totalSellingPrice().get(0).stock);
+	}
+	@Test
+	void totalByPrice()
+	{
+			/*
+				Burada save 1 defa yapılmıştır. Akışta
+			 	bir proplem olup olmadığı testi yapılmıştır
+		 */
+		assertEquals(10,dataHalper.totalByPrice().get(0).stock);
+	}
+	@Test
+	void totalProfit()
+	{
+			/*
+				Burada save 1 defa yapılmıştır. Akışta
+			 	bir proplem olup olmadığı testi yapılmıştır
+		 */
+		assertEquals("LAPTOP",dataHalper.totalProfit().get(0).name);
 	}
 
 }
