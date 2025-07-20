@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ProductApp</string>
+    <string name="text_name_deletebyname">Sil</string>
+    <string name="text_name_edit">Düzenle</string>
+    <string name="text_name_plus_stock">+1</string>
+    <string name="text_name_minus_stock">-1</string>
+    <string name="text_name_save">Kaydet</string>
+    <string name="text_name_succes_save">Kayıt Başarılı</string>
+    <string name="text_name_unsucces_save">Veriler Kaydedilemedi</string>
+    <string name="text_name_dashboard">Dashboard</string>
+    <string name="text_name_dashboard_sum_stock">Toplam Stok</string>
+    <string name="text_name_dashboard_sum_sell_price">Toplam Satış</string>
+    <string name="text_name_dashboard_sum_by_price">Toplam Alış</string>
+    <string name="text_name_dashboard_max_by_price">En yüksek alış</string>
+    <string name="text_name_dashboard_max_sell_price">En yüksek satış</string>
+    <string name="text_name_dashboard_min_sell_price">En düşük satış</string>
+    <string name="text_name_dashboard_min_by_price">En düşük alış</string>
+    <string name="text_name_dashboard_total_profit">Toplam kar</string>
+    <string name="text_name_dashboard_total_sell_price">Toplam satış </string>
+    <string name="text_name_dashboard_total_by_price">Toplam alış </string>
+</resources>
