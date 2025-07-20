@@ -24,7 +24,7 @@ public class BasicSecurity {
     @Bean
     public SecurityFilterChain defaultSecurity(HttpSecurity http) throws Exception{
 
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a ->
                                         a.requestMatchers("product/delete-by-name").hasRole("ADMIN")
                                        .requestMatchers("product/delete-all").hasRole("ADMIN")

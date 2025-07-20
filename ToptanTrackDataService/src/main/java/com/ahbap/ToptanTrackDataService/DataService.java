@@ -1,9 +1,11 @@
 package com.ahbap.ToptanTrackDataService;
 
 import com.ahbap.DataServiceException;
+import com.ahbap.IProduct;
 import com.ahbap.RepositoryException;
 import com.ahbap.ToptanTrack.DataHalper;
-import com.ahbap.IProduct;
+import com.ahbap.ToptanTrack.ProductEntity;
+import com.ahbap.ToptanTrackDataService.mappers.IMaperDataService;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
@@ -203,6 +205,92 @@ public class DataService implements IProduct<ProductEntityDataService> {
         catch (RepositoryException e)
         {
             throw new DataServiceException("DataServiceException Error in save %s".formatted(e.getMessage()));
+        }
+    }
+
+    public int totalStockQuantity() {
+        try {
+
+            return repositories.totalStockQuantity();
+
+        } catch (Throwable e) {
+            throw new RepositoryException("RepositoryException Error in totalStockQuantity %s".formatted(e.getMessage()));
+
+        }
+
+    }
+
+    public ProductEntityDataService MaxSellPrice() {
+
+        try {
+            return mappers.toProductEntityDataService(repositories.MaxSellPrice());
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalStockQuantity %s".formatted(e.getMessage()));
+
+        }
+
+    }
+    public ProductEntityDataService MinSellPrice(){
+
+        try {
+            return mappers.toProductEntityDataService(repositories.MinSellPrice());
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in MinSellPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    /// /////////
+
+    public ProductEntityDataService MaxByPrice(){
+
+        try {
+            return mappers.toProductEntityDataService(repositories.MaxByPrice());
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in MaxByPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public ProductEntityDataService MinByPrice(){
+
+        try {
+            return mappers.toProductEntityDataService(repositories.MinByPrice());
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in MinByPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public List<TotalPriceDataServiceDto> totalSellingPrice(){
+
+        try {
+            return repositories.totalSellingPrice().stream().map(a -> mappers.toTotalPriceDataServiceDto(a)).toList();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalSellingPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public List<TotalPriceDataServiceDto>  totalByPrice(){
+
+        try {
+            return repositories.totalByPrice().stream().map(a -> mappers.toTotalPriceDataServiceDto(a)).toList();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalSellingPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public List<TotalProfitDataServiceDto>  totalProfit(){
+
+        try {
+            return repositories.totalProfit().stream().map(a -> mappers.toTotalProfitDataServiceDto(a)).toList();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalProfit %s".formatted(e.getMessage()));
+
         }
     }
 

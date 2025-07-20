@@ -2,8 +2,11 @@ package com.ahbap.ToptanTrackControler;
 
 import com.ahbap.DataServiceException;
 import com.ahbap.RepositoryException;
+import com.ahbap.ToptanTrack.ProductEntity;
 import com.ahbap.ToptanTrackDataService.DataService;
 import com.ahbap.ToptanTrackDataService.ProductEntityDataService;
+import com.ahbap.ToptanTrackDataService.TotalPriceDataServiceDto;
+import com.ahbap.ToptanTrackDataService.TotalProfitDataServiceDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -213,4 +216,90 @@ public class ProductServices  {
 
     }
 
+    //
+    public int totalStockQuantity() {
+        try {
+
+            return dataService.totalStockQuantity();
+
+        } catch (Throwable e) {
+            throw new RepositoryException("RepositoryException Error in totalStockQuantity %s".formatted(e.getMessage()));
+
+        }
+
+    }
+
+    public ProductEntityDataService MaxSellPrice() {
+
+        try {
+            return dataService.MaxSellPrice();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalStockQuantity %s".formatted(e.getMessage()));
+
+        }
+
+    }
+    public ProductEntityDataService MinSellPrice(){
+
+        try {
+            return dataService.MinSellPrice();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in MinSellPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    /// /////////
+
+    public ProductEntityDataService MaxByPrice(){
+
+        try {
+            return dataService.MaxByPrice();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in MaxByPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public ProductEntityDataService MinByPrice(){
+
+        try {
+            return dataService.MinByPrice();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in MinByPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public List<TotalPriceDataServiceDto> totalSellingPrice(){
+
+        try {
+            return dataService.totalSellingPrice();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalSellingPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public List<TotalPriceDataServiceDto>  totalByPrice(){
+
+        try {
+            return dataService.totalByPrice();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalSellingPrice %s".formatted(e.getMessage()));
+
+        }
+    }
+    public List<TotalProfitDataServiceDto>  totalProfit(){
+
+        try {
+            return dataService.totalProfit();
+        }
+        catch (Throwable e) {
+            throw new RepositoryException("MaxSellPrice Error in totalProfit %s".formatted(e.getMessage()));
+
+        }
+    }
 }

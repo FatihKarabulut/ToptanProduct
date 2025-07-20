@@ -5,6 +5,8 @@ import com.ahbap.ToptanTrackControler.body.SellPriceAndByPriceDto;
 import com.ahbap.ToptanTrackControler.body.SellPriceUpdateDto;
 import com.ahbap.ToptanTrackControler.body.StockUpdate;
 import com.ahbap.ToptanTrackDataService.ProductEntityDataService;
+import com.ahbap.ToptanTrackDataService.TotalPriceDataServiceDto;
+import com.ahbap.ToptanTrackDataService.TotalProfitDataServiceDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +32,12 @@ public class ProductControler {
     @GetMapping("/findByName")
     public ResponseEntity<List<ProductEntityDataService>> findByName(@RequestParam String  name) {
 
-        var product = productServices.findByName(name);
-        return product.equals(Optional.empty()) ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(product.get());
+
+        var product = productServices.findByName(name).get();
+        log.info("findByName {}",product);
+       return product.equals(Optional.empty()) ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(product);
+
     }
 
     @GetMapping("/findAll")
@@ -102,7 +107,8 @@ public class ProductControler {
     @PatchMapping("/update-sell-price-and-by-price")
     public boolean updateSellPriceAndByPrice(@RequestBody SellPriceAndByPriceDto sellPriceAndByPriceDto) {
         log.info("updateSellPriceAndByPrice");
-        return productServices.updateSellPriceAndByPrice(sellPriceAndByPriceDto.sellPrice,sellPriceAndByPriceDto.byPrice,sellPriceAndByPriceDto.name);
+        return productServices.updateSellPriceAndByPrice(sellPriceAndByPriceDto.sellPrice,sellPriceAndByPriceDto.byPrice,
+                sellPriceAndByPriceDto.name);
     }
     @GetMapping("/stock")
     public ResponseEntity<List<ProductEntityDataService>> getProductsWithStockLessThan(@RequestParam int stock) {
@@ -116,6 +122,48 @@ public class ProductControler {
     public boolean save(@RequestBody ProductEntityDataService product){
         log.info("save");
         return productServices.save(product);
+    }
+
+
+    @GetMapping("/total_stock_quantity")
+    public int totalStockQuantity() {
+        log.info("totalStockQuantity");
+        return productServices.totalStockQuantity();
+    }
+    @GetMapping("/max_sell_price")
+    public ProductEntityDataService MaxSellPrice() {
+        log.info("MaxSellPrice");
+        return productServices.MaxSellPrice();
+    }
+    @GetMapping("/min_sell_price")
+    public ProductEntityDataService MinSellPrice() {
+        log.info("MinSellPrice");
+        return productServices.MinSellPrice();
+    }
+    @GetMapping("/max_by_price")
+    public ProductEntityDataService MaxByPrice(){
+        log.info("max_by_price");
+        return productServices.MaxByPrice();
+    }
+    @GetMapping("/min_by_price")
+    public ProductEntityDataService MinByPrice(){
+        log.info("MinByPrice");
+        return productServices.MinByPrice();
+    }
+    @GetMapping("/total_selling_price")
+    public List<TotalPriceDataServiceDto> totalSellingPrice(){
+        log.info("totalSellingPrice");
+        return productServices.totalSellingPrice();
+    }
+    @GetMapping("/total_by_price")
+    public List<TotalPriceDataServiceDto> totalByPrice(){
+        log.info("totalByPrice");
+        return productServices.totalByPrice();
+    }
+    @GetMapping("/total_profit")
+    public List<TotalProfitDataServiceDto> totalProfit(){
+        log.info("totalProfit");
+        return productServices.totalProfit();
     }
 
 

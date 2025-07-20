@@ -68,6 +68,7 @@ public interface IDao extends CrudRepository<ProductEntity,Long> {
 
     @Query(nativeQuery = true,value = "SELECT MIN(p.by_price) FROM product p WHERE p.stock > 0")
     BigDecimal MinByPrice();
+
     @Query(nativeQuery = true,value = "SELECT SUM(p.stock * p.sell_price), p.name,p.stock " +
                                     "FROM product p WHERE p.stock > 0 group by p.name,p.stock")
     List<TotalPriceDto> totalSellingPrice();
@@ -78,8 +79,8 @@ public interface IDao extends CrudRepository<ProductEntity,Long> {
 
     @Query(nativeQuery = true,value = """
             SELECT SUM(p.stock * (p.sell_price - p.by_price)), 
-                   p.by_price ,p.sell_price, p.name FROM product p
-                 WHERE p.stock > 0 group by p.by_price ,p.sell_price, p.name
+                   p.by_price ,p.sell_price, p.name,p.stock FROM product p
+                 WHERE p.stock > 0 group by p.by_price ,p.sell_price, p.name,p.stock
 """)
     List<TotalProfitDto> totalProfit();
 

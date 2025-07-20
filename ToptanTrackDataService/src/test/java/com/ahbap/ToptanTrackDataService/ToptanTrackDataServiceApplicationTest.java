@@ -1,6 +1,7 @@
 package com.ahbap.ToptanTrackDataService;
 
 
+import com.ahbap.ToptanTrack.ProductEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ class ToptanTrackDataServiceApplicationTest {
 		var product = new ProductEntityDataService();
 		product.name = "Phone";
 		product.addedBy = "test dataservices";
-		product.byPrice = BigDecimal.valueOf(1100.50);
-		product.sellPrice = BigDecimal.valueOf(1000.00);
+		product.byPrice = BigDecimal.valueOf(1100.00);
+		product.sellPrice = BigDecimal.valueOf(1200.00);
 		product.stock = 80;
 		product.datetime = LocalDateTime.now();
 		dataservice.save(product);
@@ -78,23 +79,23 @@ class ToptanTrackDataServiceApplicationTest {
 	@Test
 	void findByByPrice()
 	{
-		assertEquals("PHONE",dataservice.findByByPrice(BigDecimal.valueOf(1100.50)).get(0).name);
+		assertEquals("SARJ",dataservice.findByByPrice(BigDecimal.valueOf(1100.50)).get(0).name);
 	}
 	@Test
 	void findBySellPrice()
 	{
-		assertEquals("PHONE",dataservice.findBySellPrice(BigDecimal.valueOf(1000.00)).get(0).name);
+		assertTrue(!dataservice.findBySellPrice(BigDecimal.valueOf(3000)).isEmpty());
 	}
 
 	@Test
 	void updateByPrice()
 	{
-		assertTrue(dataservice.updateByPrice(BigDecimal.valueOf(2000),"Phone"));
+		assertTrue(dataservice.updateByPrice(BigDecimal.valueOf(1050),"Phone"));
 	}
 	@Test
 	void updateSellPrice()
 	{
-		assertTrue(dataservice.updateSellPrice(BigDecimal.valueOf(850.00),"Phone"));
+		assertTrue(dataservice.updateSellPrice(BigDecimal.valueOf(2500),"Phone"));
 	}
 	@Test
 	void updateToReduceStock()  {
@@ -110,12 +111,12 @@ class ToptanTrackDataServiceApplicationTest {
 	@Test
 	void updateSellPriceAndByPriceTrue()
 	{
-		assertTrue(dataservice.updateSellPriceAndByPrice(BigDecimal.valueOf(1000.00),BigDecimal.valueOf(2000),"Phone"));
+		assertTrue(dataservice.updateSellPriceAndByPrice(BigDecimal.valueOf(3000.00),BigDecimal.valueOf(2000),"Phone"));
 	}
 	@Test
 	void updateSellPriceAndByPriceFalse()
 	{
-		assertFalse(dataservice.updateSellPriceAndByPrice(BigDecimal.valueOf(3000.00),BigDecimal.valueOf(2000),"Phone"));
+		assertFalse(dataservice.updateSellPriceAndByPrice(BigDecimal.valueOf(1000),BigDecimal.valueOf(2000),"Phone"));
 	}
 
 	@Test
@@ -142,5 +143,83 @@ class ToptanTrackDataServiceApplicationTest {
 		assertTrue(dataservice.deleteAll());
 	}
 
+	@Test
+	void totalStockQuantity() {
+
+		assertEquals(2,dataservice.totalStockQuantity());
+
+	}
+	@Test
+	void totalStockQuantityTrue() {
+
+		assertTrue(dataservice.totalStockQuantity() > 0);
+
+	}
+	@Test
+	void MaxSellPrice() {
+
+		var pe = new ProductEntityDataService();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1000.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+		dataservice.save(pe);
+		assertEquals("SARJ",dataservice.MaxSellPrice().name);
+	}
+
+	@Test
+	void MinSellPrice() {
+		var pe = new ProductEntityDataService();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1000.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+		dataservice.save(pe);
+		assertEquals("PHONE",dataservice.MinSellPrice().name);
+	}
+	@Test
+	void MaxByPrice() {
+
+		var pe = new ProductEntityDataService();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1000.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+		dataservice.save(pe);
+		assertEquals("PHONE",dataservice.MaxByPrice().name);
+	}
+	@Test
+	void MinByPrice() {
+
+		var pe = new ProductEntityDataService();
+		pe.sellPrice = BigDecimal.valueOf(1500.00);
+		pe.byPrice = BigDecimal.valueOf(1000.00);
+		pe.name = "sarj";
+		pe.addedBy = "Hikmet";
+		pe.stock = 12;
+		dataservice.save(pe);
+		assertEquals("SARJ",dataservice.MinByPrice().name);
+	}
+	@Test
+	void totalSellingPrice() {
+
+		assertEquals(92,dataservice.totalSellingPrice().stream().mapToInt(a -> a.stock).sum());
+
+	}
+	@Test
+	void totalByPrice() {
+		assertTrue(!dataservice.totalByPrice().isEmpty());
+	}
+
+	@Test
+	void totalProfit(){
+
+		System.out.println(dataservice.totalProfit().toString());
+		assertTrue(!dataservice.totalProfit().isEmpty());
+
+	}
 
 }

@@ -1,6 +1,5 @@
 package com.ahbap.ToptanTrackDataService;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 

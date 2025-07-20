@@ -133,6 +133,7 @@ public class DataHalper implements IProduct<ProductEntity> {
                 return false;
             if (name.isBlank())
                 return false;
+
             return dao.updateSellPriceAndByPrice(sellPrice, byPrice, name.toUpperCase()) > 0;
         } catch (Throwable e) {
             throw new RepositoryException("RepositoryException Error in updateSellPriceAndByPrice %s".formatted(e.getMessage()));
@@ -265,7 +266,7 @@ public class DataHalper implements IProduct<ProductEntity> {
             return dao.getBySellPrice(dao.MaxSellPrice());
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in totalStockQuantity %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in MaxSellPrice %s".formatted(e.getMessage()));
 
         }
 
@@ -276,7 +277,7 @@ public class DataHalper implements IProduct<ProductEntity> {
             return dao.getBySellPrice(dao.MinSellPrice());
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in MinSellPrice %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in MinSellPrice %s".formatted(e.getMessage()));
 
         }
     }
@@ -286,17 +287,18 @@ public class DataHalper implements IProduct<ProductEntity> {
             return dao.getByPrice(dao.MaxByPrice());
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in MaxByPrice %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in MaxByPrice %s".formatted(e.getMessage()));
 
         }
     }
+
     public ProductEntity MinByPrice(){
 
         try {
             return dao.getByPrice(dao.MinByPrice());
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in MinByPrice %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in MinByPrice %s".formatted(e.getMessage()));
 
         }
     }
@@ -306,7 +308,7 @@ public class DataHalper implements IProduct<ProductEntity> {
             return dao.totalSellingPrice();
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in totalSellingPrice %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in totalSellingPrice %s".formatted(e.getMessage()));
 
         }
     }
@@ -316,7 +318,7 @@ public class DataHalper implements IProduct<ProductEntity> {
             return dao.totalByPrice();
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in totalSellingPrice %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in totalByPrice %s".formatted(e.getMessage()));
 
         }
     }
@@ -326,7 +328,7 @@ public class DataHalper implements IProduct<ProductEntity> {
             return dao.totalProfit();
         }
         catch (Throwable e) {
-            throw new RepositoryException("MaxSellPrice Error in totalProfit %s".formatted(e.getMessage()));
+            throw new RepositoryException("RepositoryException Error in totalProfit %s".formatted(e.getMessage()));
 
         }
     }

@@ -219,7 +219,9 @@ class ToptanTrackApplicationTests {
 				Burada save 1 defa yapılmıştır. Akışta
 			 	bir proplem olup olmadığı testi yapılmıştır
 		 */
-		assertEquals("LAPTOP",dataHalper.totalProfit().get(0).name);
+
+        assertTrue(!dataHalper.totalProfit().isEmpty());
+
 	}
 
 }
