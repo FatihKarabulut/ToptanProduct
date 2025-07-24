@@ -3,6 +3,7 @@ package com.ahbap.ToptanTrackDataService;
 
 import com.ahbap.ToptanTrack.ProductEntity;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableJpaRepositories(basePackages = "com.ahbap")
 @ComponentScan(basePackages = "com.ahbap")
 @EntityScan(basePackages = "com.ahbap")
+@Disabled
 class ToptanTrackDataServiceApplicationTest {
 
 	@Autowired

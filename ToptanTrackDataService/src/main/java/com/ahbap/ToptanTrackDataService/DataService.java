@@ -182,7 +182,7 @@ public class DataService implements IProduct<ProductEntityDataService> {
         }
     }
 
-
+    @Override
     public List<ProductEntityDataService> getProductsWithStockLessThan(int stock) {
 
         try {
@@ -196,7 +196,7 @@ public class DataService implements IProduct<ProductEntityDataService> {
 
     }
 
-
+    @Override
     public boolean save(ProductEntityDataService product){
 
         try {
@@ -231,6 +231,7 @@ public class DataService implements IProduct<ProductEntityDataService> {
         }
 
     }
+
     public ProductEntityDataService MinSellPrice(){
 
         try {

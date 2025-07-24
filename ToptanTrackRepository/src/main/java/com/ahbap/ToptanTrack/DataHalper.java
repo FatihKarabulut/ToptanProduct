@@ -19,6 +19,7 @@ public class DataHalper implements IProduct<ProductEntity> {
     }
 
 
+    @Override
     public List<ProductEntity> findByName(String name) {
         try {
 
@@ -30,7 +31,7 @@ public class DataHalper implements IProduct<ProductEntity> {
 
 
     }
-
+    @Override
     public List<ProductEntity> findAll() {
 
         try {
@@ -41,7 +42,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
 
     }
-
+    @Override
     @Transactional
     public boolean deleteByName(String name) {
 
@@ -55,7 +56,7 @@ public class DataHalper implements IProduct<ProductEntity> {
             throw new RepositoryException("RepositoryException Error in deleteByName %s".formatted(e.getMessage()));
         }
     }
-
+    @Override
     @Transactional
     public boolean deleteAll() {
 
@@ -71,7 +72,7 @@ public class DataHalper implements IProduct<ProductEntity> {
 
     }
 
-
+    @Override
     public boolean updateStock(int stock, String name) {
 
         try {
@@ -88,6 +89,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
     }
 
+    @Override
     public boolean updateADDStock(int stock, String name) {
 
         try {
@@ -105,6 +107,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
     }
 
+    @Override
     public boolean updateToReduceStock(int stock, String name) {
 
         try {
@@ -122,6 +125,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
     }
 
+    @Override
     @Transactional
     public boolean updateSellPriceAndByPrice(BigDecimal sellPrice, BigDecimal byPrice, String name) {
 
@@ -142,6 +146,7 @@ public class DataHalper implements IProduct<ProductEntity> {
 
     }
 
+    @Override
     @Transactional
     public boolean updateSellPrice(BigDecimal sellPrice, String name) {
 
@@ -162,6 +167,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
     }
 
+    @Override
     @Transactional
     public boolean updateByPrice(BigDecimal byPrice, String name) {
 
@@ -182,6 +188,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
     }
 
+    @Override
     public List<ProductEntity> findByByPrice(BigDecimal byPrice) {
 
         try {
@@ -193,6 +200,7 @@ public class DataHalper implements IProduct<ProductEntity> {
 
     }
 
+    @Override
     public List<ProductEntity> findBySellPrice(BigDecimal sellPrice) {
         try {
 
@@ -202,6 +210,7 @@ public class DataHalper implements IProduct<ProductEntity> {
         }
     }
 
+    @Override
     public List<ProductEntity> getProductsWithStockLessThan(int stock) {
 
         try {
@@ -213,6 +222,7 @@ public class DataHalper implements IProduct<ProductEntity> {
 
     }
 
+    @Override
     @Transactional
     public boolean save(ProductEntity product) {
 
